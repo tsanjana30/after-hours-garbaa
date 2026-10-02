@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Entry Scanner | After-Hours Garba
+    </title>
+
+    <!-- QR SCANNER LIBRARY -->
+    <script src="https://unpkg.com/html5-qrcode"></script>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            min-height: 100vh;
+
+            background:
+                radial-gradient(
+                    circle at top,
+                    #241329 0%,
+                    #100c12 45%,
+                    #09070a 100%
+                );
+
+            color: white;
+
+            padding: 20px;
+        }
+
+
+        .container {
+
+            width: 100%;
+
+            max-width: 650px;
+
+            margin: 0 auto;
+        }
+
+
+        /* =========================
+           HEADER
+        ========================== */
+
+        .header {
+
+            text-align: center;
+
+            margin-bottom: 25px;
+        }
+
+
+        .header h1 {
+
+            color: #f5d58a;
+
+            font-size: 30px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .header p {
+
+            color: #aaa;
+
+            font-size: 14px;
+        }
+
+
+        /* =========================
+           SCANNER CARD
+        ========================== */
+
+        .scanner-card {
+
+            background: #141015;
+
+            border: 1px solid
+                rgba(245, 213, 138, 0.2);
+
+            border-radius: 20px;
+
+            padding: 20px;
+
+            box-shadow:
+                0 20px 60px
+                rgba(0, 0, 0, 0.4);
+        }
+
+
+        .scanner-title {
+
+            text-align: center;
+
+            color: #e7a6c8;
+
+            font-size: 22px;
+
+            font-weight: 700;
+
+            margin-bottom: 18px;
+        }
+
+
+        .access-panel {
+            padding: 16px;
+            margin-bottom: 18px;
+            border: 1px solid rgba(245, 213, 138, 0.2);
+            border-radius: 14px;
+            background: #211721;
+        }
+
+        .access-panel label {
+            display: block;
+            color: #f5d58a;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .access-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .access-row input {
+            flex: 1;
+            min-width: 0;
+            padding: 12px;
+            border: 1px solid #725b38;
+            border-radius: 9px;
+            background: #120d12;
+            color: #fff;
+        }
+
+        .access-row button {
+            padding: 12px 18px;
+            border: 0;
+            border-radius: 9px;
+            background: #e7a6c8;
+            color: #211621;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        #accessStatus {
+            min-height: 20px;
+            margin: 9px 0 0;
+            color: #bbb;
+            font-size: 13px;
+        }
+
+        /* =========================
+           CAMERA
+        ========================== */
+
+        #reader {
+
+            width: 100%;
+
+            min-height: 330px;
+
+            border-radius: 16px;
+
+            overflow: hidden;
+
+            background: #050505;
+
+            border: 2px solid
+                rgba(245, 213, 138, 0.25);
+        }
+
+
+        #reader video {
+
+            width: 100% !important;
+
+            height: auto !important;
+
+            min-height: 330px;
+
+            object-fit: cover;
+
+            border-radius: 14px;
+        }
+
+
+        /*
+         * Hide unnecessary library borders/text.
+         */
+
+        #reader__dashboard_section {
+
+            padding: 10px !important;
+        }
+
+
+        #reader__dashboard_section_csr {
+
+            margin-top: 5px !important;
+        }
+
+
+        #reader__dashboard_section_swaplink {
+
+            color: #e7a6c8 !important;
+        }
+
+
+        #reader select {
+
+            background: #171218;
+
+            color: white;
+
+            border: 1px solid #514452;
+
+            padding: 8px;
+
+            border-radius: 7px;
+        }
+
+
+        #reader button {
+
+            background: #d89abd !important;
+
+            color: #111 !important;
+
+            border: none !important;
+
+            padding: 9px 15px !important;
+
+            border-radius: 7px !important;
+
+            font-weight: 700 !important;
+
+            cursor: pointer;
+        }
+
+
+        /* =========================
+           CAMERA CONTROLS
+        ========================== */
+
+        .camera-controls {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 10px;
+
+            margin-top: 15px;
+        }
+
+
+        .camera-button {
+
+            padding: 13px;
+
+            border: 1px solid
+                rgba(245, 213, 138, 0.25);
+
+            border-radius: 9px;
+
+            background: #1b151d;
+
+            color: #f5d58a;
+
+            font-weight: 700;
+
+            cursor: pointer;
+        }
+
+
+        .camera-button:hover {
+
+            background: #28202a;
+        }
+
+
+        .camera-button:disabled {
+
+            opacity: 0.45;
+
+            cursor: not-allowed;
+        }
+
+
+        /* =========================
+           INSTRUCTION
+        ========================== */
+
+        .instruction {
+
+            text-align: center;
+
+            color: #aaa;
+
+            font-size: 14px;
+
+            line-height: 1.5;
+
+            margin: 18px 0 8px;
+        }
+
+
+        .scanner-status {
+
+            text-align: center;
+
+            color: #777;
+
+            font-size: 13px;
+
+            margin-top: 10px;
+        }
+
+
+        /* =========================
+           RESULT
+        ========================== */
+
+        #result {
+
+            display: none;
+
+            margin-top: 20px;
+
+            padding: 25px;
+
+            border-radius: 16px;
+
+            text-align: center;
+        }
+
+
+        #result.success {
+
+            display: block;
+
+            background:
+                rgba(80, 168, 120, 0.1);
+
+            border: 1px solid
+                rgba(80, 168, 120, 0.4);
+        }
+
+
+        #result.error {
+
+            display: block;
+
+            background:
+                rgba(169, 80, 92, 0.1);
+
+            border: 1px solid
+                rgba(169, 80, 92, 0.4);
+        }
+
+
+        #result.warning {
+
+            display: block;
+
+            background:
+                rgba(180, 123, 59, 0.1);
+
+            border: 1px solid
+                rgba(180, 123, 59, 0.4);
+        }
+
+
+        .result-icon {
+
+            font-size: 50px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .result-title {
+
+            font-size: 25px;
+
+            font-weight: 700;
+
+            margin-bottom: 12px;
+        }
+
+
+        .success .result-title {
+
+            color: #63bd8b;
+        }
+
+
+        .error .result-title {
+
+            color: #e87878;
+        }
+
+
+        .warning .result-title {
+
+            color: #f5d58a;
+        }
+
+
+        .result-details {
+
+            color: #ddd;
+
+            font-size: 15px;
+
+            line-height: 1.7;
+        }
+
+
+        .result-details strong {
+
+            color: white;
+        }
+
+
+        /* =========================
+           SCAN AGAIN
+        ========================== */
+
+        .scan-again {
+
+            width: 100%;
+
+            margin-top: 20px;
+
+            padding: 14px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: #d89abd;
+
+            color: #111;
+
+            font-size: 16px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+        }
+
+
+        .scan-again:hover {
+
+            background: #e5afd0;
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================== */
+
+        @media (max-width: 600px) {
+
+            .access-row {
+                flex-direction: column;
+            }
+
+            body {
+
+                padding: 10px;
+            }
+
+
+            .header h1 {
+
+                font-size: 26px;
+            }
+
+
+            .scanner-card {
+
+                padding: 12px;
+            }
+
+
+            #reader {
+
+                min-height: 350px;
+            }
+
+
+            #reader video {
+
+                min-height: 350px;
+            }
+
+
+            .result-title {
+
+                font-size: 22px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <!-- =========================
+         HEADER
+    ========================== -->
+
+    <div class="header">
+
+        <h1>
+            After-Hours Garba
+        </h1>
+
+        <p>
+            Entry Verification System
+        </p>
+
+    </div>
+
+
+    <!-- =========================
+         SCANNER CARD
+    ========================== -->
+
+    <div class="scanner-card">
+
+        <div class="scanner-title">
+            Scan Event QR
+        </div>
+
+
+        <div class="access-panel">
+            <label for="scannerAdminKey">Staff access key</label>
+            <div class="access-row">
+                <input id="scannerAdminKey" type="password" autocomplete="off" placeholder="Enter the admin key">
+                <button type="button" onclick="unlockScanner()">Unlock</button>
+            </div>
+            <p id="accessStatus" role="status">Unlock the scanner before admitting guests.</p>
+        </div>
+
+        <!-- CAMERA -->
+
+        <div id="reader"></div>
+
+
+        <!-- CAMERA CONTROLS -->
+
+        <div class="camera-controls">
+
+            <button
+                id="startButton"
+                class="camera-button"
+                onclick="startScanner()"
+            >
+                📷 Start Camera
+            </button>
+
+
+            <button
+                id="stopButton"
+                class="camera-button"
+                onclick="stopScanner()"
+                disabled
+            >
+                ⏹ Stop Camera
+            </button>
+
+        </div>
+
+
+        <div class="instruction">
+
+            Hold the guest's QR code about
+            15–30 cm from the camera.
+
+            <br>
+
+            Keep the QR code flat, bright,
+            and completely visible.
+
+        </div>
+
+
+        <div
+            id="scannerStatus"
+            class="scanner-status"
+        >
+            Camera not started.
+
+        </div>
+
+
+        <!-- =========================
+             RESULT
+        ========================== -->
+
+        <div id="result">
+
+            <div
+                id="resultIcon"
+                class="result-icon"
+            >
+                ✓
+            </div>
+
+
+            <div
+                id="resultTitle"
+                class="result-title"
+            >
+                Entry Allowed
+            </div>
+
+
+            <div
+                id="resultDetails"
+                class="result-details"
+            >
+            </div>
+
+
+            <button
+                class="scan-again"
+                onclick="startScannerAgain()"
+            >
+                Scan Next Guest
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+
+    /* =====================================
+       API
+    ====================================== */
+
+    const API_URL = window.location.origin;
+
+
+    /* =====================================
+       VARIABLES
+    ====================================== */
+
+    let html5QrCode = null;
+
+    let scannerRunning = false;
+
+    let processingScan = false;
+
+    let scannerUnlocked = false;
+
+    async function unlockScanner() {
+        const input = document.getElementById("scannerAdminKey");
+        const status = document.getElementById("accessStatus");
+        const key = input.value.trim() || sessionStorage.getItem("garbaAdminKey");
+
+        if (!key) {
+            status.textContent = "Enter the staff access key first.";
+            input.focus();
+            return false;
+        }
+
+        try {
+            const response = await fetch(`${API_URL}/api/admin/auth`, {
+                headers: { "x-admin-key": key }
+            });
+            if (!response.ok) throw new Error("Access key was not accepted.");
+            sessionStorage.setItem("garbaAdminKey", key);
+            input.value = "";
+            scannerUnlocked = true;
+            status.textContent = "Scanner unlocked. Start the camera when ready.";
+            return true;
+        } catch (error) {
+            scannerUnlocked = false;
+            sessionStorage.removeItem("garbaAdminKey");
+            status.textContent = error.message || "Could not unlock the scanner.";
+            return false;
+        }
+    }
+
+
+    /* =====================================
+       START SCANNER
+    ====================================== */
+
+    async function startScanner() {
+
+        if (scannerRunning) {
+
+            return;
+        }
+
+        if (!scannerUnlocked && !(await unlockScanner())) {
+            return;
+        }
+
+
+        const status =
+            document.getElementById(
+                "scannerStatus"
+            );
+
+
+        const startButton =
+            document.getElementById(
+                "startButton"
+            );
+
+
+        const stopButton =
+            document.getElementById(
+                "stopButton"
+            );
+
+
+        try {
+
+            status.textContent =
+                "Starting high-quality camera...";
+
+
+            /*
+             * Create a fresh scanner.
+             */
+
+            html5QrCode =
+                new Html5Qrcode(
+                    "reader"
+                );
+
+
+            /*
+             * Prefer the rear camera,
+             * high resolution, and
+             * continuous focus where
+             * supported by the device.
+             */
+
+            const cameraConfig = {
+
+                facingMode: {
+                    ideal: "environment"
+                },
+
+                width: {
+                    ideal: 1920
+                },
+
+                height: {
+                    ideal: 1080
+                },
+
+                frameRate: {
+                    ideal: 30,
+                    max: 30
+                },
+
+                advanced: [
+                    {
+                        focusMode:
+                            "continuous"
+                    }
+                ]
+
+            };
+
+
+            /*
+             * Scanner configuration.
+             */
+
+            const scannerConfig = {
+
+                fps: 15,
+
+                qrbox: function (
+                    viewfinderWidth,
+                    viewfinderHeight
+                ) {
+
+                    /*
+                     * Use a large square while
+                     * keeping some camera area
+                     * around it.
+                     */
+
+                    const size =
+                        Math.min(
+                            viewfinderWidth,
+                            viewfinderHeight
+                        ) * 0.72;
+
+                    return {
+                        width: Math.floor(size),
+                        height: Math.floor(size)
+                    };
+
+                },
+
+                aspectRatio: 1.0,
+
+                disableFlip: true,
+
+                videoConstraints:
+                    cameraConfig
+
+            };
+
+
+            /*
+             * Start camera.
+             */
+
+            await html5QrCode.start(
+
+                cameraConfig,
+
+                scannerConfig,
+
+                onScanSuccess,
+
+                onScanFailure
+
+            );
+
+
+            scannerRunning = true;
+
+            processingScan = false;
+
+
+            startButton.disabled =
+                true;
+
+            stopButton.disabled =
+                false;
+
+
+            status.textContent =
+                "Camera ready — position the QR inside the square.";
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Camera error:",
+                error
+            );
+
+
+            scannerRunning = false;
+
+
+            startButton.disabled =
+                false;
+
+            stopButton.disabled =
+                true;
+
+
+            status.textContent =
+                "Unable to start the camera.";
+
+
+            showResult(
+                "error",
+                "Camera Error",
+                `
+                    Please allow camera access
+                    and try again.
+
+                    <br><br>
+
+                    If you are using a laptop,
+                    use a phone with a rear camera
+                    for better QR scanning.
+                `,
+                "⚠️"
+            );
+        }
+    }
+
+
+    /* =====================================
+       SCAN FAILURE
+    ====================================== */
+
+    function onScanFailure(
+        errorMessage
+    ) {
+
+        /*
+         * Ignore normal failures.
+         *
+         * The scanner continuously calls
+         * this while looking for a QR.
+         */
+
+    }
+
+
+    /* =====================================
+       SCAN SUCCESS
+    ====================================== */
+
+    async function onScanSuccess(
+        decodedText
+    ) {
+
+        if (processingScan) {
+
+            return;
+        }
+
+
+        processingScan = true;
+
+
+        console.log(
+            "QR scanned:",
+            decodedText
+        );
+
+
+        /*
+         * Stop camera while processing.
+         */
+
+        await stopScanner();
+
+
+        /*
+         * Extract token.
+         */
+
+        const qrToken =
+            extractQrToken(
+                decodedText
+            );
+
+
+        if (!qrToken) {
+
+            showResult(
+                "error",
+                "Invalid QR Code",
+                `
+                    This QR code does not
+                    belong to the event.
+                `,
+                "✕"
+            );
+
+
+            processingScan = false;
+
+            return;
+        }
+
+
+        /*
+         * Check ticket.
+         */
+
+        await checkInTicket(
+            qrToken
+        );
+    }
+
+
+    /* =====================================
+       EXTRACT QR TOKEN
+    ====================================== */
+
+    function extractQrToken(
+        decodedText
+    ) {
+
+        try {
+
+            /*
+             * QR contains a URL.
+             */
+
+            if (
+                decodedText.startsWith(
+                    "http://"
+                ) ||
+                decodedText.startsWith(
+                    "https://"
+                )
+            ) {
+
+                const url =
+                    new URL(
+                        decodedText
+                    );
+
+
+                const parts =
+                    url.pathname
+                        .split("/")
+                        .filter(
+                            part =>
+                                part.length > 0
+                        );
+
+
+                const ticketIndex =
+                    parts.indexOf(
+                        "ticket"
+                    );
+
+
+                if (
+                    ticketIndex !== -1 &&
+                    parts[ticketIndex + 1]
+                ) {
+
+                    return decodeURIComponent(
+                        parts[
+                            ticketIndex + 1
+                        ]
+                    );
+                }
+
+            }
+
+
+            /*
+             * QR contains only token.
+             */
+
+            if (
+                decodedText.trim().length > 10
+            ) {
+
+                return decodedText.trim();
+
+            }
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "QR parsing error:",
+                error
+            );
+        }
+
+
+        return null;
+    }
+
+
+    /* =====================================
+       CHECK-IN
+    ====================================== */
+
+    async function checkInTicket(
+        qrToken
+    ) {
+
+        try {
+
+            const response =
+                await fetch(
+                    `${API_URL}/api/checkin`,
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "x-admin-key": sessionStorage.getItem("garbaAdminKey") || ""
+                        },
+                        body: JSON.stringify({ qrToken })
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            console.log(
+                "Check-in response:",
+                data
+            );
+
+
+            /*
+             * SUCCESS
+             */
+
+            if (
+                response.ok &&
+                data.success
+            ) {
+
+                const booking =
+                    data.booking || {};
+
+
+                showResult(
+                    "success",
+                    "ENTRY ALLOWED",
+                    `
+                        <strong>Guest:</strong>
+                        ${escapeHtml(
+                            booking.name ||
+                            "Guest"
+                        )}
+
+                        <br>
+
+                        <strong>Pass:</strong>
+                        ${escapeHtml(
+                            booking.pass ||
+                            "Event Pass"
+                        )}
+
+                        <br>
+
+                        <strong>Quantity:</strong>
+                        ${escapeHtml(
+                            booking.quantity ||
+                            1
+                        )}
+
+                        <br>
+
+                        <strong>Pass ID:</strong>
+                        ${escapeHtml(
+                            booking.ticketId ||
+                            ""
+                        )}
+
+                        <br><br>
+
+                        ✓ Payment verified
+                        <br>
+
+                        ✓ Entry recorded
+                    `,
+                    "✓"
+                );
+
+
+                return;
+            }
+
+
+            if (response.status === 401) {
+                scannerUnlocked = false;
+                sessionStorage.removeItem("garbaAdminKey");
+                document.getElementById("accessStatus").textContent =
+                    "Staff access expired. Enter the key again.";
+                showResult("error", "ACCESS REQUIRED", "Unlock the scanner and try again.", "✕");
+                return;
+            }
+
+            /*
+             * ALREADY USED
+             */
+
+            if (
+                response.status === 409
+            ) {
+
+                showResult(
+                    "warning",
+                    "ENTRY ALREADY USED",
+                    `
+                        This event pass has
+                        already been checked in.
+
+                        <br><br>
+
+                        <strong>
+                        Entry is not allowed.
+                        </strong>
+                    `,
+                    "⚠️"
+                );
+
+
+                return;
+            }
+
+
+            /*
+             * INVALID / UNVERIFIED
+             */
+
+            showResult(
+                "error",
+                "ENTRY DENIED",
+                `
+                    ${escapeHtml(
+                        data.message ||
+                        "This ticket is invalid or has not been verified."
+                    )}
+                `,
+                "✕"
+            );
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Check-in error:",
+                error
+            );
+
+
+            showResult(
+                "error",
+                "SERVER ERROR",
+                `
+                    Could not verify this ticket.
+
+                    <br><br>
+
+                    Please check that the
+                    backend server is running.
+                `,
+                "⚠️"
+            );
+        }
+    }
+
+
+    /* =====================================
+       STOP SCANNER
+    ====================================== */
+
+    async function stopScanner() {
+
+        if (
+            html5QrCode &&
+            scannerRunning
+        ) {
+
+            try {
+
+                await html5QrCode.stop();
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Scanner stop error:",
+                    error
+                );
+
+            }
+
+            scannerRunning = false;
+
+
+            const startButton =
+                document.getElementById(
+                    "startButton"
+                );
+
+
+            const stopButton =
+                document.getElementById(
+                    "stopButton"
+                );
+
+
+            startButton.disabled =
+                false;
+
+            stopButton.disabled =
+                true;
+
+
+            document
+                .getElementById(
+                    "scannerStatus"
+                )
+                .textContent =
+                    "Camera stopped.";
+        }
+    }
+
+
+    /* =====================================
+       SCAN AGAIN
+    ====================================== */
+
+    async function startScannerAgain() {
+
+        /*
+         * Hide old result.
+         */
+
+        document
+            .getElementById(
+                "result"
+            )
+            .style.display =
+                "none";
+
+
+        processingScan = false;
+
+
+        /*
+         * Clear old scanner.
+         */
+
+        document
+            .getElementById(
+                "reader"
+            )
+            .innerHTML = "";
+
+
+        /*
+         * Start fresh camera.
+         */
+
+        await startScanner();
+    }
+
+
+    /* =====================================
+       SHOW RESULT
+    ====================================== */
+
+    function showResult(
+        type,
+        title,
+        details,
+        icon
+    ) {
+
+        const result =
+            document.getElementById(
+                "result"
+            );
+
+
+        const resultIcon =
+            document.getElementById(
+                "resultIcon"
+            );
+
+
+        const resultTitle =
+            document.getElementById(
+                "resultTitle"
+            );
+
+
+        const resultDetails =
+            document.getElementById(
+                "resultDetails"
+            );
+
+
+        result.className =
+            type;
+
+
+        resultIcon.textContent =
+            icon;
+
+
+        resultTitle.textContent =
+            title;
+
+
+        resultDetails.innerHTML =
+            details;
+
+
+        result.style.display =
+            "block";
+
+
+        result.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+    }
+
+
+    /* =====================================
+       ESCAPE HTML
+    ====================================== */
+
+    function escapeHtml(
+        value
+    ) {
+
+        if (
+            value === null ||
+            value === undefined
+        ) {
+
+            return "";
+        }
+
+
+        return String(value)
+            .replace(
+                /&/g,
+                "&amp;"
+            )
+            .replace(
+                /</g,
+                "&lt;"
+            )
+            .replace(
+                />/g,
+                "&gt;"
+            )
+            .replace(
+                /"/g,
+                "&quot;"
+            )
+            .replace(
+                /'/g,
+                "&#039;"
+            );
+    }
+
+
+</script>
+
+
+</body>
+
+</html>

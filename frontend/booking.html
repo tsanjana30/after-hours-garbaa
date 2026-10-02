@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Book Passes | After-Hours Garba</title>
+
+    <style>
+        .upi-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.copy-upi-btn {
+    flex-shrink: 0;
+    padding: 9px 15px;
+    border: 1px solid rgba(221, 176, 92, 0.4);
+    border-radius: 8px;
+    background: #211621;
+    color: #f4dca7;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.copy-upi-btn:hover {
+    background: #30202f;
+    border-color: #e2b86d;
+}
+
+.copy-upi-btn.copied {
+    background: #3a7654;
+    color: #ffffff;
+    border-color: #5ca879;
+}
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background:
+                radial-gradient(
+                    circle at top right,
+                    rgba(174, 69, 132, 0.18),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at bottom left,
+                    rgba(117, 47, 91, 0.15),
+                    transparent 35%
+                ),
+                #0d090d;
+
+            color: #f7edf4;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        /* NAVBAR */
+
+        nav {
+            padding: 22px 0;
+            border-bottom: 1px solid rgba(221, 176, 92, 0.2);
+            background: rgba(13, 9, 13, 0.9);
+        }
+
+        .nav-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .brand {
+            color: #f0c96b;
+            font-size: 24px;
+            font-weight: 800;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+        }
+
+        .back-link {
+            color: #f4dca7;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .back-link:hover {
+            color: #f0c96b;
+        }
+
+        /* HEADER */
+
+        .page-header {
+            text-align: center;
+            padding: 55px 20px 30px;
+        }
+
+        .page-header .eyebrow {
+            color: #d997b9;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .page-header h1 {
+            font-size: clamp(34px, 6vw, 58px);
+            color: #f3d58a;
+            margin-bottom: 12px;
+        }
+
+        .page-header p {
+            color: #cfc3cc;
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        /* MAIN GRID */
+
+        .booking-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            align-items: start;
+            gap: 30px;
+            padding-bottom: 70px;
+        }
+
+        .card {
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(39, 27, 39, 0.96),
+                    rgba(20, 13, 20, 0.96)
+                );
+
+            border: 1px solid rgba(220, 180, 105, 0.25);
+            border-radius: 18px;
+            padding: 28px;
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .card h2 {
+            color: #f1cf80;
+            margin-bottom: 22px;
+            font-size: 23px;
+        }
+
+        /* FORM */
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #eadde5;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 14px 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(221, 176, 92, 0.28);
+            background: #120d12;
+            color: #fff;
+            outline: none;
+            font-size: 15px;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #dcae62;
+            box-shadow: 0 0 0 2px rgba(220, 174, 98, 0.1);
+        }
+
+        .form-group input::placeholder {
+            color: #847983;
+        }
+
+        select option {
+            background: #171018;
+            color: white;
+        }
+
+        /* PRICE NOTE */
+
+        #priceNote {
+            display: block;
+            margin-top: 8px;
+            color: #d999ba;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        /* QUANTITY */
+
+        .quantity-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quantity-btn {
+            width: 48px;
+            height: 46px;
+            border-radius: 10px;
+            border: 1px solid rgba(221, 176, 92, 0.4);
+            background: #211621;
+            color: #f4dca7;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .quantity-btn:hover {
+            background: #30202f;
+            border-color: #e2b86d;
+        }
+
+        #quantity {
+            width: 80px;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        /* TOTAL */
+
+        .total-box {
+            margin-top: 25px;
+            padding: 20px;
+            border-top: 1px solid rgba(221, 176, 92, 0.2);
+            border-bottom: 1px solid rgba(221, 176, 92, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .total-label {
+            color: #d8ccd4;
+            font-size: 15px;
+        }
+
+        #total {
+            color: #f1cf80;
+            font-size: 25px;
+        }
+
+        /* PAYMENT */
+
+        .payment-section {
+            margin-top: 28px;
+        }
+
+        .payment-section h3 {
+            color: #f0c96b;
+            margin-bottom: 12px;
+        }
+
+        .upi-box {
+            background: #100b10;
+            border: 1px solid rgba(221, 176, 92, 0.22);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 18px;
+        }
+
+        .upi-label {
+            color: #9e919b;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .upi-id {
+            color: #fff;
+            font-size: 17px;
+            font-weight: 700;
+            word-break: break-word;
+        }
+
+        .qr-wrapper {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .qr-wrapper img {
+            width: 230px;
+            max-width: 100%;
+            background: white;
+            padding: 10px;
+            border-radius: 12px;
+        }
+
+        .payment-instruction {
+            color: #cfc3cc;
+            font-size: 14px;
+            line-height: 1.7;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* FILE */
+
+        .file-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px dashed rgba(221, 176, 92, 0.45);
+            border-radius: 10px;
+            background: #120d12;
+            color: #cfc3cc;
+        }
+
+        /* SUBMIT */
+
+        .submit-btn {
+            width: 100%;
+            margin-top: 25px;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(
+                135deg,
+                #e1ae66,
+                #c889b0
+            );
+            color: #120d12;
+            font-size: 17px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 30px rgba(217, 153, 186, 0.2);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* INFO CARD */
+
+        .info-item {
+            padding: 17px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-item strong {
+            display: block;
+            color: #f0c96b;
+            margin-bottom: 7px;
+        }
+
+        .info-item p {
+            color: #cfc3cc;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* STATUS */
+
+        #status {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            line-height: 1.5;
+            font-size: 14px;
+        }
+
+        #status.error {
+            display: block;
+            background: rgba(130, 32, 48, 0.25);
+            border: 1px solid rgba(235, 98, 120, 0.4);
+            color: #ffb1bd;
+        }
+
+        #status.success {
+            display: block;
+            background: rgba(43, 114, 77, 0.2);
+            border: 1px solid rgba(93, 192, 130, 0.35);
+            color: #a8e5bc;
+        }
+
+        #status.info {
+            display: block;
+            background: rgba(70, 55, 95, 0.25);
+            border: 1px solid rgba(170, 140, 220, 0.3);
+            color: #d7c9ed;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 800px) {
+            .booking-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-inner {
+                padding: 0 5px;
+            }
+
+            .card {
+                padding: 21px;
+            }
+
+            .page-header {
+                padding-top: 35px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVIGATION -->
+
+    <nav>
+        <div class="container nav-inner">
+            <a href="index.html" class="brand">
+                Sri Medha
+            </a>
+
+            <a href="index.html" class="back-link">
+                ← Back to Event
+            </a>
+        </div>
+    </nav>
+
+
+    <!-- PAGE HEADER -->
+
+    <header class="page-header">
+
+        <div class="eyebrow">
+            After-Hours Garba
+        </div>
+
+        <h1>Book Your Pass</h1>
+
+        <p>
+            Secure your place for the night when the regular night ends
+            and the real celebration begins.
+        </p>
+
+    </header>
+
+
+    <!-- BOOKING -->
+
+    <main class="container">
+
+        <div class="booking-grid">
+
+            <!-- LEFT: FORM -->
+
+            <section class="card">
+
+                <h2>Booking Details</h2>
+
+                <form id="bookingForm" enctype="multipart/form-data">
+
+                    <!-- NAME -->
+
+                    <div class="form-group">
+
+                        <label for="name">
+                            Full Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            placeholder="Enter your full name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- PHONE -->
+
+                    <div class="form-group">
+
+                        <label for="phone">
+                            Phone Number
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="phone"
+                            name="phone"
+                            placeholder="Enter your phone number"
+                            pattern="[0-9]{10}"
+                            maxlength="10"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+
+                    <div class="form-group">
+
+                        <label for="email">
+                            Email Address
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Enter your email"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- PASS -->
+
+                    <div class="form-group">
+
+                        <label for="pass">
+                            Select Pass
+                        </label>
+
+                        <select id="pass" name="pass" required>
+
+                            <option value="Single Pass">
+                                Single Pass
+                            </option>
+
+                            <option value="Couple Pass">
+                                Couple Pass
+                            </option>
+
+                            <option value="Group Pass">
+                                Group Pass
+                            </option>
+
+                        </select>
+
+                        <small id="priceNote">
+                            Checking current pricing...
+                        </small>
+
+                    </div>
+
+
+                    <!-- QUANTITY -->
+
+                    <div class="form-group">
+
+                        <label for="quantity">
+                            Quantity
+                        </label>
+
+                        <div class="quantity-box">
+
+                            <button
+                                type="button"
+                                class="quantity-btn"
+                                id="minusBtn"
+                            >
+                                −
+                            </button>
+
+                            <input
+                                type="number"
+                                id="quantity"
+                                name="quantity"
+                                value="1"
+                                min="1"
+                                max="20"
+                                readonly
+                            >
+
+                            <button
+                                type="button"
+                                class="quantity-btn"
+                                id="plusBtn"
+                            >
+                                +
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- TOTAL -->
+
+                    <div class="total-box">
+
+                        <span class="total-label">
+                            TOTAL AMOUNT
+                        </span>
+
+                        <strong id="total">
+                            ₹0
+                        </strong>
+
+                    </div>
+
+
+                    <!-- PAYMENT -->
+
+                    <div class="payment-section">
+
+                        <h3>
+                            Make Payment
+                        </h3>
+
+                        <div class="upi-box">
+
+    <div class="upi-label">
+        UPI ID
+    </div>
+
+    <div class="upi-row">
+
+        <div class="upi-id">
+            Q98338110@ybl
+        </div>
+
+        <button
+            type="button"
+            class="copy-upi-btn"
+            id="copyUpiBtn"
+        >
+            Copy
+        </button>
+
+    </div>
+
+</div>
+
+
+                        <div class="qr-wrapper">
+
+                            <img
+                                src="assets/payment-qr.png"
+                                alt="UPI Payment QR"
+                            >
+
+                        </div>
+
+
+                        <p class="payment-instruction">
+
+                            Scan the QR code using your UPI app and
+                            complete the payment for the amount shown above.
+
+                            After payment, upload your payment screenshot
+                            below for verification.
+
+                        </p>
+
+
+                        <!-- SCREENSHOT -->
+
+                        <div class="form-group">
+
+                            <label for="paymentScreenshot">
+                                Payment Screenshot
+                            </label>
+
+                            <input
+                                class="file-input"
+                                type="file"
+                                id="paymentScreenshot"
+                                name="paymentScreenshot"
+                                accept="image/png,image/jpeg,image/webp"
+                                required
+                            >
+                            <small style="display:block;margin-top:8px;color:#b6a7b6;">JPG, PNG, or WEBP · 3 MB maximum</small>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- SUBMIT -->
+
+                    <button
+                        type="submit"
+                        class="submit-btn"
+                        id="submitBtn"
+                    >
+                        Submit Booking
+                    </button>
+
+
+                    <div id="status"></div>
+
+                </form>
+
+            </section>
+
+
+            <!-- RIGHT: EVENT INFO -->
+
+            <aside class="card">
+
+                <h2>Event Details</h2>
+
+
+                <div class="info-item">
+
+                    <strong>
+                        📅 Date
+                    </strong>
+
+                    <p>
+                        Saturday, 17th October 2026
+                    </p>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <strong>
+                        🕕 Time
+                    </strong>
+
+                    <p>
+                        6 PM onwards
+                    </p>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <strong>
+                        📍 Venue
+                    </strong>
+
+                    <p>
+                        Neelakanta Resort and Convention,
+                        Nalgonda
+                    </p>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <strong>
+                        ✨ What's Included
+                    </strong>
+
+                    <p>
+                        Neon band, complimentary mocktails,
+                        Garba & Dandiya, music & celebration,
+                        food and photo booth.
+                    </p>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <strong>
+                        🎟️ Payment Verification
+                    </strong>
+
+                    <p>
+                        Your booking will initially remain
+                        pending until the payment screenshot
+                        is manually verified by the event team.
+                    </p>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <strong>
+                        📱 Confirmation
+                    </strong>
+
+                    <p>
+                        After your payment is verified, your
+                        event pass and QR code will become
+                        available through the booking confirmation
+                        page.
+                    </p>
+
+                </div>
+
+
+                <div class="info-item">
+
+    <strong>
+        📞 Contact
+    </strong>
+
+    <p>
+        <strong>Jathin Netha</strong>
+        +91 62819 29323<br>
+        srimedhaitconsulting@gmail.com
+    </p>
+
+    <p style="margin-top: 12px;">
+        <strong>Sai Prakash</strong>
+        +91 79956 73306
+    </p>
+
+</div>
+
+                    
+
+            </aside>
+
+        </div>
+
+    </main>
+
+
+    <script>
+
+        /*
+         * The scanner and booking page can be opened through:
+         *
+         * localhost
+         * local IP
+         * Cloudflare Tunnel
+         *
+         * Therefore we use the current origin automatically.
+         */
+
+        const API_URL = window.location.origin;
+
+
+        // Current pricing returned by backend
+
+        let currentPrices = {
+            "Single Pass": 399,
+            "Couple Pass": 699,
+            "Group Pass": 3499
+        };
+
+
+        let pricingLabel = "Regular event pricing";
+
+
+        // Elements
+
+        const bookingForm =
+            document.getElementById("bookingForm");
+
+        const passSelect =
+            document.getElementById("pass");
+
+        const quantityInput =
+            document.getElementById("quantity");
+
+        const totalElement =
+            document.getElementById("total");
+
+        const priceNote =
+            document.getElementById("priceNote");
+
+        const minusBtn =
+            document.getElementById("minusBtn");
+
+        const plusBtn =
+            document.getElementById("plusBtn");
+
+        const submitBtn =
+            document.getElementById("submitBtn");
+
+        const statusElement =
+            document.getElementById("status");
+
+
+        /*
+         * Show status message
+         */
+
+        function showStatus(message, type) {
+
+            statusElement.textContent = message;
+
+            statusElement.className = type;
+
+        }
+
+
+        /*
+         * Update total displayed on page
+         */
+
+        function updateTotal() {
+
+            const selectedPass =
+                passSelect.value;
+
+            const quantity =
+                Number(quantityInput.value) || 1;
+
+            const price =
+                Number(currentPrices[selectedPass]) || 0;
+
+            const total =
+                price * quantity;
+
+            totalElement.textContent =
+                `₹${total.toLocaleString("en-IN")}`;
+
+        }
+
+
+        /*
+         * Load pricing from backend
+         */
+
+        async function loadPrices() {
+
+            try {
+
+                const response =
+                    await fetch(`${API_URL}/api/prices`);
+
+                if (!response.ok) {
+                    throw new Error(
+                        "Could not load pricing."
+                    );
+                }
+
+                const data =
+                    await response.json();
+
+
+                /*
+                 * Expected backend structure:
+                 *
+                 * {
+                 *   pricingType: "EARLY_BIRD",
+                 *   prices: {
+                 *      "Single Pass": 399,
+                 *      "Couple Pass": 699,
+                 *      "Group Pass": 3499
+                 *   }
+                 * }
+                 *
+                 * If your backend uses the direct price
+                 * object, the fallback below also handles it.
+                 */
+
+                if (data.prices) {
+
+                    currentPrices =
+                        data.prices;
+
+                }
+
+
+                /*
+                 * Handle possible backend naming
+                 */
+
+                if (
+                    data.pricingType === "EARLY_BIRD" ||
+                    data.type === "EARLY_BIRD"
+                ) {
+
+                    pricingLabel =
+                        "Early Bird pricing";
+
+                } else {
+
+                    pricingLabel =
+                        "Regular event pricing";
+
+                }
+
+
+                /*
+                 * If backend sends a message,
+                 * use it only as additional information.
+                 */
+
+                if (data.message) {
+
+                    priceNote.textContent =
+                        data.message;
+
+                } else {
+
+                    priceNote.textContent =
+                        pricingLabel;
+
+                }
+
+
+                updateTotal();
+
+            } catch (error) {
+
+                console.error(
+                    "Pricing error:",
+                    error
+                );
+
+
+                /*
+                 * Safe fallback for the current date:
+                 * regular prices.
+                 */
+
+                currentPrices = {
+                    "Single Pass": 399,
+                    "Couple Pass": 699,
+                    "Group Pass": 3499
+                };
+
+                pricingLabel =
+                    "Regular event pricing";
+
+                priceNote.textContent =
+                    "Regular event pricing is currently active.";
+
+                updateTotal();
+
+            }
+
+        }
+
+
+        /*
+         * Pass changed
+         */
+
+        passSelect.addEventListener(
+            "change",
+            updateTotal
+        );
+
+
+        /*
+         * Minus quantity
+         */
+
+        minusBtn.addEventListener(
+            "click",
+            function () {
+
+                let quantity =
+                    Number(quantityInput.value);
+
+                if (quantity > 1) {
+
+                    quantity--;
+
+                    quantityInput.value =
+                        quantity;
+
+                    updateTotal();
+
+                }
+
+            }
+        );
+
+
+        /*
+         * Plus quantity
+         */
+
+        plusBtn.addEventListener(
+            "click",
+            function () {
+
+                let quantity =
+                    Number(quantityInput.value);
+
+                if (quantity < 20) {
+
+                    quantity++;
+
+                    quantityInput.value =
+                        quantity;
+
+                    updateTotal();
+
+                }
+
+            }
+        );
+
+
+        /*
+         * Submit booking
+         */
+
+        bookingForm.addEventListener(
+            "submit",
+            async function (event) {
+
+                event.preventDefault();
+
+
+                submitBtn.disabled = true;
+
+                submitBtn.textContent =
+                    "Submitting Booking...";
+
+
+                showStatus(
+                    "Uploading your payment screenshot and creating your booking...",
+                    "info"
+                );
+
+
+                try {
+
+                    const screenshot = document.getElementById("paymentScreenshot").files[0];
+                    if (screenshot && screenshot.size > 3 * 1024 * 1024) {
+                        throw new Error("Payment screenshot must be 3 MB or smaller. Please compress it and try again.");
+                    }
+
+                    const formData =
+                        new FormData(bookingForm);
+
+
+                    /*
+                     * Send everything to backend.
+                     *
+                     * The backend is responsible for
+                     * calculating the final amount.
+                     */
+
+                    const response =
+                        await fetch(
+                            `${API_URL}/api/bookings`,
+                            {
+                                method: "POST",
+                                body: formData
+                            }
+                        );
+
+
+                    const contentType = response.headers.get("content-type") || "";
+                    const data = contentType.includes("application/json")
+                        ? await response.json()
+                        : {};
+
+
+                    if (!response.ok || !data.success) {
+
+                        throw new Error(
+                            data.message ||
+                            "Booking service is unavailable. Please try again shortly."
+                        );
+
+                    }
+
+
+                    /*
+                     * Backend should return ticketId.
+                     */
+
+                    const ticketId = data.ticketId || data.booking?.ticketId;
+
+                    if (!ticketId) {
+                        throw new Error("Booking was created but no ticket ID was returned.");
+                    }
+
+                    sessionStorage.setItem("ticketId", ticketId);
+                    window.location.href =
+                        `success.html?ticketId=${encodeURIComponent(ticketId)}`;
+
+                } catch (error) {
+
+                    console.error(
+                        "Booking error:",
+                        error
+                    );
+
+
+                    showStatus(
+                        error.message ||
+                        "Something went wrong. Please try again.",
+                        "error"
+                    );
+
+
+                    submitBtn.disabled = false;
+
+                    submitBtn.textContent =
+                        "Submit Booking";
+
+                }
+
+            }
+        );
+
+
+        /*
+         * Load current backend pricing
+         * when page opens.
+         */
+const copyUpiBtn =
+    document.getElementById("copyUpiBtn");
+
+const displayedUpiId =
+    document.querySelector(".upi-id");
+
+copyUpiBtn.addEventListener(
+    "click",
+    async function () {
+
+        const upiId =
+            displayedUpiId.textContent.trim();
+
+        try {
+
+            await navigator.clipboard.writeText(upiId);
+
+            copyUpiBtn.textContent = "Copied ✓";
+
+            copyUpiBtn.classList.add("copied");
+
+            setTimeout(() => {
+
+                copyUpiBtn.textContent = "Copy";
+
+                copyUpiBtn.classList.remove("copied");
+
+            }, 2000);
+
+        } catch (error) {
+
+            alert(
+                "Could not copy the UPI ID. Please copy it manually."
+            );
+
+        }
+
+    }
+);
+        loadPrices();
+
+    </script>
+
+</body>
+</html>

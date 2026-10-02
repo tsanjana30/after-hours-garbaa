@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: after-hours-garba
+    runtime: node
+    plan: free
+    buildCommand: cd backend && npm ci
+    startCommand: cd backend && npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: MONGODB_URI
+        sync: false
+      - key: ADMIN_KEY
+        sync: false
+      - key: EMAIL_USER
+        sync: false
+      - key: RESEND_API_KEY
+        sync: false
+      - key: RESEND_FROM
+        sync: false

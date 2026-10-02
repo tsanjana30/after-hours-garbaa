@@ -1,0 +1,6 @@
+/public/
+/node_modules/
+/after-hours-garba-share.zip
+.env
+.env.*
+node_modules/

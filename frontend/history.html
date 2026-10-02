@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pass History | After-Hours Garba</title>
+    <style>
+        * { box-sizing: border-box; }
+        [hidden] { display: none !important; }
+        body { margin: 0; min-height: 100vh; color: #f6f0f5; font-family: Arial, Helvetica, sans-serif; background: radial-gradient(circle at top, #28152d, #100c12 48%, #09070a); }
+        header { position: sticky; top: 0; z-index: 5; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px max(20px, calc((100vw - 1160px)/2)); background: rgba(13, 9, 16, .94); border-bottom: 1px solid #413444; backdrop-filter: blur(12px); }
+        .brand { color: #f5d58a; font-size: 23px; font-weight: 800; text-decoration: none; }
+        .back { color: #e7a6c8; text-decoration: none; font-weight: 700; }
+        main { width: min(1160px, calc(100% - 36px)); margin: 42px auto 80px; }
+        .eyebrow { color: #e7a6c8; letter-spacing: .24em; text-transform: uppercase; font-size: 12px; font-weight: 800; }
+        h1 { color: #f5d58a; font-size: clamp(30px, 5vw, 46px); margin: 8px 0; }
+        .intro { color: #c9bcc9; line-height: 1.6; margin: 0 0 30px; }
+        .panel, .card, .stat { background: linear-gradient(145deg, #251a27, #151016); border: 1px solid #49374b; border-radius: 17px; box-shadow: 0 18px 48px rgba(0,0,0,.18); }
+        .panel { padding: 24px; }
+        .panel h2 { margin: 0 0 16px; color: #f5d58a; }
+        label { display: block; margin-bottom: 8px; color: #d7c5d5; font-weight: 700; font-size: 14px; }
+        input, select { width: 100%; padding: 12px 13px; border: 1px solid #6b566e; border-radius: 9px; background: #110d13; color: white; font: inherit; }
+        input:focus, select:focus, button:focus-visible, a:focus-visible, summary:focus-visible { outline: 2px solid #f5d58a; outline-offset: 2px; }
+        button { border: 0; border-radius: 9px; padding: 12px 18px; background: #e4ac7c; color: #21141e; font: inherit; font-weight: 800; cursor: pointer; }
+        button:hover { filter: brightness(1.12); }
+        button:disabled { opacity: .45; cursor: not-allowed; }
+        .access-form { max-width: 440px; display: flex; gap: 10px; align-items: end; }
+        .access-form > div { flex: 1; }
+        .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 26px; }
+        .stat { padding: 20px; }
+        .stat span { display: block; color: #b8a9b9; font-size: 12px; text-transform: uppercase; letter-spacing: .1em; }
+        .stat strong { display: block; color: #f5d58a; margin-top: 8px; font-size: 28px; }
+        .filters { display: grid; grid-template-columns: 220px 1fr auto; gap: 14px; align-items: end; margin-bottom: 14px; }
+        .hint { color: #b8a9b9; font-size: 13px; margin: 0 0 22px; }
+        .notice { min-height: 22px; margin: 12px 0 20px; color: #d8cbd8; line-height: 1.5; }
+        .notice.error { color: #f08e91; }
+        .notice.success { color: #85d7a6; }
+        .notice.warning { color: #f5d58a; }
+        .card { margin: 0 0 17px; overflow: hidden; }
+        .card-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; padding: 19px 22px; border-bottom: 1px solid #3e3140; }
+        .ticket { color: #e7a6c8; font-weight: 800; letter-spacing: .04em; word-break: break-word; }
+        .chip { display: inline-block; padding: 7px 11px; border-radius: 999px; font-size: 12px; font-weight: 800; background: #514125; color: #f5d58a; }
+        .chip.VERIFIED { background: #183b2a; color: #8cdeb0; }
+        .chip.REJECTED { background: #4a2029; color: #f4a0ab; }
+        .card-body { padding: 20px 22px; }
+        .overview { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+        .field small { display: block; color: #a99aab; font-size: 12px; margin-bottom: 5px; }
+        .field span { line-height: 1.4; word-break: break-word; }
+        details { border-top: 1px solid #3e3140; padding: 0 22px 18px; }
+        summary { color: #f5d58a; cursor: pointer; font-weight: 800; padding: 17px 0 0; }
+        .detail-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 19px; padding: 20px 0; }
+        .proof { border-top: 1px solid #3e3140; padding-top: 16px; }
+        .proof img { display: block; max-width: min(100%, 540px); max-height: 600px; margin-top: 14px; border-radius: 10px; background: white; }
+        .card-actions { display: flex; gap: 10px; flex-wrap: wrap; padding-top: 15px; }
+        .card-actions button { background: #413047; color: #f5d58a; border: 1px solid #745b64; }
+        .pagination { display: flex; justify-content: center; align-items: center; gap: 16px; margin-top: 25px; }
+        .pagination span { color: #d0c0d0; }
+        .empty { text-align: center; padding: 48px 20px; color: #c9bcc9; }
+        @media(max-width: 760px) { .stats { grid-template-columns: repeat(2, 1fr); } .filters { grid-template-columns: 1fr; } .overview, .detail-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media(max-width: 500px) { header { padding: 15px 18px; } main { width: calc(100% - 24px); margin-top: 28px; } .access-form { display: block; } .access-form button { margin-top: 10px; width: 100%; } .overview, .detail-grid { grid-template-columns: 1fr; } .stat { padding: 15px; } .stat strong { font-size: 22px; } }
+    </style>
+</head>
+<body>
+    <header><a class="brand" href="index.html">Sri Medha</a><a class="back" href="admin.html">← Admin Dashboard</a></header>
+    <main>
+        <p class="eyebrow">After-Hours Garba</p>
+        <h1>Pass History</h1>
+        <p class="intro">Review every booking, payment decision, email status, check-in, and payment proof.</p>
+
+        <section id="accessPanel" class="panel" hidden>
+            <h2>Staff access</h2>
+            <form id="accessForm" class="access-form">
+                <div><label for="accessKey">Admin key</label><input id="accessKey" type="password" autocomplete="off" required></div>
+                <button type="submit">Open history</button>
+            </form>
+        </section>
+
+        <section id="historyPanel" hidden>
+            <div class="stats">
+                <div class="stat"><span>Pending</span><strong id="countPending">0</strong></div>
+                <div class="stat"><span>Verified</span><strong id="countVerified">0</strong></div>
+                <div class="stat"><span>Rejected</span><strong id="countRejected">0</strong></div>
+                <div class="stat"><span>Amount awaiting</span><strong id="amountPending">₹0</strong></div>
+            </div>
+            <form id="filters" class="filters">
+                <div><label for="statusFilter">Payment status</label><select id="statusFilter"><option value="ALL">All passes</option><option value="PENDING_VERIFICATION">Pending</option><option value="VERIFIED">Verified</option><option value="REJECTED">Rejected</option></select></div>
+                <div><label for="searchInput">Search</label><input id="searchInput" type="search" maxlength="100" placeholder="Pass ID, name, email, or phone"></div>
+                <button type="submit">Search</button>
+            </form>
+            <p class="hint">Open a pass to inspect its full details and payment screenshot. Results show 20 at a time.</p>
+            <p id="notice" class="notice" role="status" aria-live="polite"></p>
+            <div id="bookingList"></div>
+            <nav class="pagination" aria-label="Booking pages"><button id="previousPage" type="button">Previous</button><span id="pageInfo">Page 1 of 1</span><button id="nextPage" type="button">Next</button></nav>
+        </section>
+    </main>
+    <script>
+        const api = window.location.origin;
+        const state = { key: sessionStorage.getItem("garbaAdminKey"), status: "ALL", search: "", page: 1, pages: 1, request: 0, imageUrls: [] };
+        const $ = (id) => document.getElementById(id);
+        const esc = (value) => String(value ?? "").replace(/[&<>"']/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character]);
+        const date = (value) => value ? new Date(value).toLocaleString("en-IN") : "—";
+        const money = (value) => `₹${Number(value || 0).toLocaleString("en-IN")}`;
+
+        function notice(message, type = "") { $("notice").textContent = message; $("notice").className = `notice ${type}`.trim(); }
+        function requireAccess() { state.key = null; sessionStorage.removeItem("garbaAdminKey"); $("historyPanel").hidden = true; $("accessPanel").hidden = false; }
+        async function authenticate(key) {
+            const response = await fetch(`${api}/api/admin/auth`, { headers: { "x-admin-key": key } });
+            if (!response.ok) throw new Error("Admin key was not accepted.");
+            state.key = key;
+            sessionStorage.setItem("garbaAdminKey", key);
+            $("accessPanel").hidden = true;
+            $("historyPanel").hidden = false;
+            await loadHistory();
+        }
+
+        function renderCard(booking) {
+            const status = booking.paymentStatus || "PENDING_VERIFICATION";
+            const actions = [
+                status === "PENDING_VERIFICATION" && (booking.bookingEmailStatus !== "SENT" || booking.adminEmailStatus !== "SENT")
+                    ? `<button type="button" data-action="retry">Retry booking emails</button>` : "",
+                status === "VERIFIED" && booking.emailStatus !== "SENT"
+                    ? `<button type="button" data-action="resend">Resend verified pass</button>` : ""
+            ].join("");
+            const diagnostic = [booking.bookingEmailStatus, booking.adminEmailStatus, booking.emailStatus].includes("FAILED")
+                ? `<p class="notice warning">An email failed. Review the error below and check the host's server logs.${actions ? " You can retry an eligible message here." : ""}</p>` : "";
+            const errorFields = [
+                ["Customer email error", booking.bookingEmailError],
+                ["Organizer email error", booking.adminEmailError],
+                ["Pass email error", booking.passEmailError]
+            ].filter(([, value]) => value).map(([label, value]) =>
+                `<div class="field"><small>${label}</small><span>${esc(value)}</span></div>`
+            ).join("");
+            return `<article class="card" data-ticket="${esc(booking.ticketId)}">
+                <div class="card-head"><span class="ticket">${esc(booking.ticketId)}</span><span class="chip ${esc(status)}">${esc(status.replaceAll("_", " "))}</span></div>
+                <div class="card-body"><div class="overview">
+                    <div class="field"><small>Guest</small><span>${esc(booking.name)}</span></div>
+                    <div class="field"><small>Pass</small><span>${esc(booking.pass)} × ${esc(booking.quantity)}</span></div>
+                    <div class="field"><small>Amount</small><span>${money(booking.amount)}</span></div>
+                    <div class="field"><small>Submitted</small><span>${date(booking.createdAt)}</span></div>
+                </div></div>
+                <details><summary>View all details and payment proof</summary>
+                    <div class="detail-grid">
+                        <div class="field"><small>Phone</small><span>${esc(booking.phone)}</span></div>
+                        <div class="field"><small>Email</small><span>${esc(booking.email)}</span></div>
+                        <div class="field"><small>Payment status</small><span>${esc(status.replaceAll("_", " "))}</span></div>
+                        <div class="field"><small>Customer booking email</small><span>${esc(booking.bookingEmailStatus || "NOT SENT")}</span></div>
+                        <div class="field"><small>Organizer booking email</small><span>${esc(booking.adminEmailStatus || "NOT SENT")}</span></div>
+                        <div class="field"><small>Verified pass email</small><span>${esc(booking.emailStatus || "NOT SENT")}</span></div>
+                        <div class="field"><small>Pass email sent</small><span>${date(booking.emailSentAt)}</span></div>
+                        <div class="field"><small>Check-in</small><span>${esc((booking.checkInStatus || "NOT_CHECKED_IN").replaceAll("_", " "))}</span></div>
+                        <div class="field"><small>Checked in at</small><span>${date(booking.checkedInAt)}</span></div>
+                        <div class="field"><small>Last updated</small><span>${date(booking.updatedAt)}</span></div>
+                        ${errorFields}
+                    </div>
+                    ${diagnostic}
+                    <div class="proof"><strong>Payment proof</strong><p class="proof-status">Open this pass to load its screenshot.</p><img alt="Payment proof" hidden></div>
+                    <div class="card-actions">${actions}</div>
+                </details>
+            </article>`;
+        }
+
+        async function loadProof(card) {
+            const proof = card.querySelector(".proof");
+            const status = proof.querySelector(".proof-status");
+            const image = proof.querySelector("img");
+            status.textContent = "Loading payment proof...";
+            try {
+                const ticketId = card.dataset.ticket;
+                const response = await fetch(`${api}/api/admin/payment-screenshot/${encodeURIComponent(ticketId)}`, { headers: { "x-admin-key": state.key } });
+                if (response.status === 401) { requireAccess(); return; }
+                if (!response.ok) throw new Error("Payment proof is unavailable for this booking. Older local uploads may not exist after deployment.");
+                const url = URL.createObjectURL(await response.blob());
+                state.imageUrls.push(url);
+                card.dataset.proofLoaded = "true";
+                image.src = url;
+                image.hidden = false;
+                status.hidden = true;
+            } catch (error) { status.textContent = error.message || "Could not load payment proof."; }
+        }
+
+        function render(data) {
+            for (const url of state.imageUrls) URL.revokeObjectURL(url);
+            state.imageUrls = [];
+            $("countPending").textContent = data.summary.pending;
+            $("countVerified").textContent = data.summary.verified;
+            $("countRejected").textContent = data.summary.rejected;
+            $("amountPending").textContent = money(data.summary.pendingAmount);
+            $("bookingList").innerHTML = data.bookings.length
+                ? data.bookings.map(renderCard).join("")
+                : `<div class="panel empty">No passes match these filters.</div>`;
+            state.pages = data.pagination.pages;
+            $("pageInfo").textContent = `Page ${data.pagination.page} of ${state.pages} · ${data.pagination.total} matching`;
+            $("previousPage").disabled = state.page <= 1;
+            $("nextPage").disabled = state.page >= state.pages;
+            for (const card of $("bookingList").querySelectorAll(".card")) {
+                card.querySelector("details").addEventListener("toggle", (event) => {
+                    if (event.target.open && !card.dataset.proofLoaded && !card.dataset.proofLoading) {
+                        card.dataset.proofLoading = "true";
+                        loadProof(card).finally(() => { delete card.dataset.proofLoading; });
+                    }
+                });
+                for (const button of card.querySelectorAll("[data-action]")) {
+                    button.addEventListener("click", () => runAction(button.dataset.action, card.dataset.ticket));
+                }
+            }
+        }
+
+        async function loadHistory() {
+            if (!state.key) { requireAccess(); return; }
+            const request = ++state.request;
+            notice("Loading pass history...");
+            const query = new URLSearchParams({ status: state.status, search: state.search, page: String(state.page) });
+            try {
+                const response = await fetch(`${api}/api/admin/bookings?${query}`, { headers: { "x-admin-key": state.key } });
+                const data = await response.json();
+                if (request !== state.request) return;
+                if (response.status === 401) { requireAccess(); return; }
+                if (!response.ok || !data.success) throw new Error(data.message || "Could not load pass history.");
+                render(data);
+                notice("");
+            } catch (error) { if (request === state.request) notice(error.message || "Could not load pass history.", "error"); }
+        }
+
+        async function runAction(action, ticketId) {
+            const endpoint = action === "retry" ? "retry-booking-emails" : "resend-pass";
+            notice(action === "retry" ? "Retrying booking emails..." : "Sending the verified pass...");
+            try {
+                const response = await fetch(`${api}/api/admin/${endpoint}/${encodeURIComponent(ticketId)}`, { method: "POST", headers: { "x-admin-key": state.key } });
+                const data = await response.json();
+                if (response.status === 401) { requireAccess(); return; }
+                if (!response.ok) throw new Error(data.message || "Could not complete the email action.");
+                await loadHistory();
+                const succeeded = action === "retry"
+                    ? data.bookingEmailStatus === "SENT" && data.adminEmailStatus === "SENT"
+                    : data.emailSent !== false;
+                notice(data.message || "Email action completed.", succeeded ? "success" : "warning");
+            } catch (error) { notice(error.message || "Could not complete the email action.", "error"); }
+        }
+
+        $("accessForm").addEventListener("submit", async (event) => {
+            event.preventDefault();
+            try { await authenticate($("accessKey").value.trim()); $("accessKey").value = ""; }
+            catch (error) { $("accessPanel").querySelector("h2").textContent = error.message || "Could not open history."; }
+        });
+        $("filters").addEventListener("submit", (event) => { event.preventDefault(); state.search = $("searchInput").value.trim(); state.page = 1; loadHistory(); });
+        $("statusFilter").addEventListener("change", () => { state.status = $("statusFilter").value; state.page = 1; loadHistory(); });
+        $("previousPage").addEventListener("click", () => { if (state.page > 1) { state.page--; loadHistory(); } });
+        $("nextPage").addEventListener("click", () => { if (state.page < state.pages) { state.page++; loadHistory(); } });
+        if (state.key) authenticate(state.key).catch(requireAccess); else requireAccess();
+    </script>
+</body>
+</html>

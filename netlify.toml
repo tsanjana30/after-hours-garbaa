@@ -1,0 +1,13 @@
+[build]
+  command = "cd backend && npm ci"
+  publish = "frontend"
+
+[functions]
+  directory = "backend/netlify"
+  node_bundler = "esbuild"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
+  force = true

@@ -93,7 +93,7 @@ let prices = {
 
     "Couple Pass": 699,
 
-    "Group Pass": 3499
+    "Group Pass": 1399
 
 };
 
@@ -447,7 +447,7 @@ async function loadCurrentPrices() {
                 groupOption.textContent =
                     earlyBirdActive
                         ? "Group Pass — ₹2,999"
-                        : "Group Pass — ₹3,499";
+                        : "Group Pass — ₹1,399";
 
             }
 

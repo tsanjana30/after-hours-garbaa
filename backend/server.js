@@ -379,7 +379,7 @@ const PRICES = {
 
     "Couple Pass": 699,
 
-    "Group Pass": 3499
+    "Group Pass": 1399
 
 };
 

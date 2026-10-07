@@ -804,6 +804,42 @@ section {
 .price span {
     font-size: 30px;
 }
+.price {
+    display: flex;
+    align-items: baseline;
+    justify-content: flex-start;
+    gap: 12px;
+    margin: 18px 0;
+    font-family: Georgia, "Times New Roman", serif;
+}
+
+.old-price {
+    position: relative;
+    font-family: Arial, sans-serif;
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: #a9a0aa;
+    opacity: 0.8;
+}
+
+.old-price::after {
+    content: "";
+    position: absolute;
+    left: -4px;
+    right: -4px;
+    top: 50%;
+    height: 2px;
+    transform: rotate(-8deg);
+    background: currentColor;
+}
+
+.new-price {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 2.7rem;
+    font-weight: 700;
+    letter-spacing: -1px;
+    line-height: 1;
+}
 
 .pass-description {
     color: var(--muted);

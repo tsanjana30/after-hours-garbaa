@@ -375,11 +375,11 @@ const UPI_ID =
 
 const PRICES = {
 
-    "Single Pass": 399,
+    "Single Pass": 299,
 
-    "Couple Pass": 699,
+    "Couple Pass": 499,
 
-    "Group Pass": 1399
+    "Group Pass": 899
 
 };
 
